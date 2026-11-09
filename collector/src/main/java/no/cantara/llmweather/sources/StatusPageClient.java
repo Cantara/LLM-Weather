@@ -11,7 +11,10 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Reads the public Statuspage.io v2 summary endpoint that most LLM providers host their status page on. */
+/**
+ * Reads a provider's public status page. Most LLM providers use Atlassian Statuspage (v2 summary API);
+ * some use Instatus, which serves a different JSON at /summary.json. Both are normalised to one Summary.
+ */
 public final class StatusPageClient {
 
     /** indicator is none, minor, major, critical or maintenance. */
@@ -35,7 +38,82 @@ public final class StatusPageClient {
 
     public Summary fetch(String baseUrl) throws IOException {
         String base = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
-        return parse(fetcher.get(base + "/api/v2/summary.json"));
+        IOException statuspageFailure;
+        try {
+            return parse(fetcher.get(base + "/api/v2/summary.json"));
+        } catch (IOException e) {
+            statuspageFailure = e;
+        }
+        try {
+            String json = fetcher.get(base + "/summary.json");
+            JsonNode root = Json.mapper().readTree(json);
+            if (root.has("activeIncidents") || root.path("page").has("status")) {
+                return parseInstatus(root);
+            }
+        } catch (IOException ignored) {
+            // fall through and report the first failure
+        }
+        throw statuspageFailure;
+    }
+
+    /** Instatus summary: page.status is UP, HASISSUES or UNDERMAINTENANCE; incidents carry impact and status in caps. */
+    static Summary parseInstatus(JsonNode root) {
+        String pageStatus = root.path("page").path("status").asText("UP").toUpperCase();
+        List<Incident> incidents = new ArrayList<>();
+        String worst = "none";
+        for (JsonNode n : root.path("activeIncidents")) {
+            String impact = switch (n.path("impact").asText("").toUpperCase()) {
+                case "MAJOROUTAGE" -> "critical";
+                case "PARTIALOUTAGE" -> "major";
+                case "DEGRADEDPERFORMANCE" -> "minor";
+                default -> "none";
+            };
+            if (rank(impact) > rank(worst)) worst = impact;
+            incidents.add(new Incident(
+                    n.path("id").asText(null),
+                    n.path("name").asText(""),
+                    n.path("status").asText("investigating").toLowerCase(),
+                    impact,
+                    instant(n.path("started")),
+                    instant(n.path("updatedAt")),
+                    n.path("url").asText(null),
+                    null));
+        }
+        List<Maintenance> maintenances = new ArrayList<>();
+        for (JsonNode n : root.path("activeMaintenances")) {
+            maintenances.add(new Maintenance(
+                    n.path("id").asText(null),
+                    n.path("name").asText(""),
+                    n.path("status").asText(null) == null ? null : n.path("status").asText().toLowerCase(),
+                    instant(n.path("start")),
+                    null,
+                    n.path("url").asText(null)));
+        }
+        String indicator;
+        String description;
+        if ("UNDERMAINTENANCE".equals(pageStatus)) {
+            indicator = "maintenance";
+            description = "Under maintenance";
+        } else if (!incidents.isEmpty()) {
+            indicator = "none".equals(worst) ? "minor" : worst;
+            description = "Experiencing issues";
+        } else if ("HASISSUES".equals(pageStatus)) {
+            indicator = "minor";
+            description = "Experiencing issues";
+        } else {
+            indicator = "none";
+            description = "All Systems Operational";
+        }
+        return new Summary(indicator, description, incidents, maintenances, null);
+    }
+
+    private static int rank(String impact) {
+        return switch (impact) {
+            case "critical" -> 3;
+            case "major" -> 2;
+            case "minor" -> 1;
+            default -> 0;
+        };
     }
 
     public static Summary parse(String json) throws IOException {

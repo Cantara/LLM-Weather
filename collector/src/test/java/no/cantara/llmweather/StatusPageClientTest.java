@@ -39,4 +39,15 @@ class StatusPageClientTest {
     void missingFixtureBehavesLikeNetworkFailure() {
         assertThrows(IOException.class, () -> client.fetch("https://status.x.ai"));
     }
+
+    @Test
+    void fallsBackToInstatusFormat() throws IOException {
+        StatusPageClient.Summary s = client.fetch("https://status.deepseek.com");
+        assertEquals("minor", s.indicator());
+        assertEquals("Experiencing issues", s.description());
+        assertEquals(1, s.incidents().size());
+        assertEquals("monitoring", s.incidents().get(0).status());
+        assertEquals("minor", s.incidents().get(0).impact());
+        assertNotNull(s.incidents().get(0).createdAt());
+    }
 }

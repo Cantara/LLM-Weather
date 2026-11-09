@@ -54,6 +54,7 @@ class ForecasterTest {
         assertEquals(Condition.RAIN, report(s, "cohere").condition());
         assertEquals(Condition.UNKNOWN, report(s, "google").condition(), "no status page and no probe");
         assertEquals(Condition.UNKNOWN, report(s, "xai").condition(), "status page fetch failed");
+        assertEquals(Condition.PARTLY_CLOUDY, report(s, "deepseek").condition(), "Instatus page with one degraded-performance incident");
         assertEquals("stormy", s.severity());
         assertTrue(s.headline().startsWith("Storms over Mistral"), s.headline());
     }
@@ -67,6 +68,7 @@ class ForecasterTest {
         assertEquals(Condition.SUNNY, report(s, "google").condition(), "a healthy probe is enough for a station without a status page");
         assertEquals(Condition.PARTLY_CLOUDY, report(s, "anthropic").condition(), "slow probe worsens one step");
         assertEquals(Condition.RAIN, report(s, "deepseek").condition(), "failed probe means at least rain");
+        assertEquals(Condition.SUNNY, report(s, "google").condition());
         assertTrue(s.alerts().stream().anyMatch(a -> a.provider().equals("DeepSeek") && a.title().contains("probe failed")));
     }
 
