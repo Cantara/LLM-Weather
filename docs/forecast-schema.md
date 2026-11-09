@@ -2,7 +2,7 @@
 
 The collector writes one `forecast.json` per run. The site renders it directly, and it is a stable,
 public contract: anything (a bot, a dashboard, another site) may consume it from
-`https://cantara.github.io/LLMWeather/data/forecast.json`.
+`https://cantara.github.io/LLM-Weather/data/forecast.json`.
 
 ## Top level
 

@@ -11,7 +11,7 @@
 
   <name>LLMWeather MCP server</name>
   <description>Read-only Model Context Protocol server exposing the LLMWeather forecast as tools, resources and prompts.</description>
-  <url>https://github.com/Cantara/LLMWeather</url>
+  <url>https://github.com/Cantara/LLM-Weather</url>
 
   <licenses>
     <license>

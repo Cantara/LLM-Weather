@@ -7,7 +7,7 @@ entity:
 
 authority:
   owner: Cantara — Norwegian Software Development Foundation
-  repo: https://github.com/Cantara/LLMWeather
+  repo: https://github.com/Cantara/LLM-Weather
   license: Apache-2.0
   org_manifest: https://wiki.cantara.no/knowledge.yaml
 

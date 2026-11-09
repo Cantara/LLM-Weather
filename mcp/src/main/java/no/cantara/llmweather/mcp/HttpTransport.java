@@ -35,7 +35,7 @@ public final class HttpTransport {
         http.createContext("/mcp", this::mcp);
         http.createContext("/healthz", ex -> respond(ex, 200, "text/plain", "ok"));
         http.createContext("/", ex -> respond(ex, 200, "text/plain",
-                "LLMWeather MCP server. POST JSON-RPC to /mcp (Streamable HTTP). https://github.com/Cantara/LLMWeather"));
+                "LLMWeather MCP server. POST JSON-RPC to /mcp (Streamable HTTP). https://github.com/Cantara/LLM-Weather"));
         http.setExecutor(Executors.newFixedThreadPool(Math.max(4, Runtime.getRuntime().availableProcessors())));
     }
 

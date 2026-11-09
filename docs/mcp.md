@@ -60,7 +60,7 @@ behind any reverse proxy or on `mcp.cantara.no`. `/healthz` answers `ok`. Reques
 minute per IP.
 
 Options: `--forecast URL|PATH` and `--history URL|PATH` override the data location (default
-`https://cantara.github.io/LLMWeather/data/...`), `--ttl SECONDS` the cache. Environment variables
+`https://cantara.github.io/LLM-Weather/data/...`), `--ttl SECONDS` the cache. Environment variables
 `LLMWEATHER_FORECAST_URL`, `LLMWEATHER_HISTORY_URL` and `PORT` set the defaults.
 
 ## Skills

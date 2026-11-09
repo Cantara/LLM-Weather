@@ -283,6 +283,6 @@ public final class McpServer {
             disappeared on OpenRouter).
 
             Prices are USD per million tokens as listed on OpenRouter and may differ from a provider's own list.
-            Full contract: https://github.com/Cantara/LLMWeather/blob/main/docs/forecast-schema.md
+            Full contract: https://github.com/Cantara/LLM-Weather/blob/main/docs/forecast-schema.md
             """;
 }

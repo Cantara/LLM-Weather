@@ -18,7 +18,7 @@ defineProps({ sources: { type: Array, default: () => [] }, generatedAt: String }
     <p class="muted credits">
       Observed {{ fmtDateTime(generatedAt) }}. Conditions come from provider status pages and optional API probes; prices and model listings from OpenRouter.
       The forecast is an indication, not a monitoring tool. An open source project by <a href="https://wiki.cantara.no" target="_blank" rel="noopener">Cantara</a>,
-      source on <a href="https://github.com/Cantara/LLMWeather" target="_blank" rel="noopener">GitHub</a>.
+      source on <a href="https://github.com/Cantara/LLM-Weather" target="_blank" rel="noopener">GitHub</a>.
     </p>
   </footer>
 </template>

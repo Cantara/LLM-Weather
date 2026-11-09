@@ -7,8 +7,7 @@ severe weather alerts and the outlook.
 
 Status pages are instruments. This is the forecaster standing in front of the map.
 
-> Sideloaded in the ProcessWatcher repository for now; it is laid out as a self-contained repository
-> root (`collector/`, `site/`, `.github/`) so it can be moved to `Cantara/LLMWeather` unchanged.
+**Live site**: [cantara.github.io/LLM-Weather](https://cantara.github.io/LLM-Weather/) (once Pages is enabled, see Deploying).
 
 ## What it shows
 
@@ -114,7 +113,7 @@ Setup in the new repository:
 2. Optionally add repository secrets `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`,
    `MISTRAL_API_KEY`, `XAI_API_KEY`, `DEEPSEEK_API_KEY`, `COHERE_API_KEY`. Each one switches on the
    probe for that provider. The Anthropic key also switches on the LLM-written bulletin.
-3. If the repository is not `Cantara/LLMWeather`, change `SITE_URL` and `BASE_PATH` in
+3. If the repository is not `Cantara/LLM-Weather`, change `SITE_URL` and `BASE_PATH` in
    `.github/workflows/forecast.yml`.
 
 Probes cost a few tokens per provider per hour. Everything else is free.

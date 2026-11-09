@@ -9,7 +9,7 @@ import java.time.Duration;
 
 /** GET through the JDK HttpClient with a short timeout and an identifying User-Agent. */
 public final class JdkHttpFetcher implements HttpFetcher {
-    public static final String USER_AGENT = "LLMWeather/0.1 (+https://github.com/Cantara/LLMWeather)";
+    public static final String USER_AGENT = "LLMWeather/0.1 (+https://github.com/Cantara/LLM-Weather)";
 
     private final HttpClient client = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))

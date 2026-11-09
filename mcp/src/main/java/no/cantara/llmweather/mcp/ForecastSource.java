@@ -19,8 +19,8 @@ import java.time.Instant;
  * takes the server down. Thread-safe.
  */
 public final class ForecastSource {
-    public static final URI DEFAULT_FORECAST = URI.create("https://cantara.github.io/LLMWeather/data/forecast.json");
-    public static final URI DEFAULT_HISTORY = URI.create("https://cantara.github.io/LLMWeather/data/history.json");
+    public static final URI DEFAULT_FORECAST = URI.create("https://cantara.github.io/LLM-Weather/data/forecast.json");
+    public static final URI DEFAULT_HISTORY = URI.create("https://cantara.github.io/LLM-Weather/data/history.json");
 
     public record Data(JsonNode forecast, JsonNode history, Instant fetchedAt, boolean stale, String error) {}
 
@@ -78,7 +78,7 @@ public final class ForecastSource {
         }
         HttpRequest req = HttpRequest.newBuilder(uri)
                 .timeout(Duration.ofSeconds(20))
-                .header("User-Agent", "LLMWeather-MCP/0.1 (+https://github.com/Cantara/LLMWeather)")
+                .header("User-Agent", "LLMWeather-MCP/0.1 (+https://github.com/Cantara/LLM-Weather)")
                 .header("Accept", "application/json")
                 .GET().build();
         try {

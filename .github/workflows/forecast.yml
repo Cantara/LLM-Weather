@@ -24,8 +24,8 @@ concurrency:
 env:
   # Pages URL of this repository; the previous history.json is fetched from here so the
   # collector can compute pressure trends and fronts without committing data to git.
-  SITE_URL: https://cantara.github.io/LLMWeather
-  BASE_PATH: /LLMWeather/
+  SITE_URL: https://cantara.github.io/LLM-Weather
+  BASE_PATH: /LLM-Weather/
 
 jobs:
   forecast:

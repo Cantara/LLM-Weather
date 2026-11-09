@@ -69,7 +69,7 @@ public final class Tools {
         meta.put("fetchedAt", data.fetchedAt().toString());
         meta.put("stale", data.stale());
         if (data.error() != null) meta.put("error", data.error());
-        meta.put("source", "https://cantara.github.io/LLMWeather");
+        meta.put("source", "https://cantara.github.io/LLM-Weather");
         meta.put("disclaimer", "An indication derived from public status pages and listings, not a monitoring system.");
         return out;
     }
