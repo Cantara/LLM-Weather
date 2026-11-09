@@ -30,14 +30,14 @@
   {
     "id": "xai",
     "name": "xAI",
-    "statusPage": "https://status.x.ai",
+    "statusPage": null,
     "openRouterPrefix": "x-ai",
     "probe": { "type": "openai", "url": "https://api.x.ai/v1/chat/completions", "model": "grok-3-mini", "apiKeyEnv": "XAI_API_KEY" }
   },
   {
     "id": "deepseek",
     "name": "DeepSeek",
-    "statusPage": "https://status.deepseek.com",
+    "statusPage": null,
     "openRouterPrefix": "deepseek",
     "probe": { "type": "openai", "url": "https://api.deepseek.com/chat/completions", "model": "deepseek-chat", "apiKeyEnv": "DEEPSEEK_API_KEY" }
   },

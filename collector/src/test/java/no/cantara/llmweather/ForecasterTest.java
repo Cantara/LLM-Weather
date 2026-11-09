@@ -53,8 +53,8 @@ class ForecasterTest {
         assertEquals(Condition.STORM, report(s, "mistral").condition());
         assertEquals(Condition.RAIN, report(s, "cohere").condition());
         assertEquals(Condition.UNKNOWN, report(s, "google").condition(), "no status page and no probe");
-        assertEquals(Condition.UNKNOWN, report(s, "xai").condition(), "status page fetch failed");
-        assertEquals(Condition.PARTLY_CLOUDY, report(s, "deepseek").condition(), "Instatus page with one degraded-performance incident");
+        assertEquals(Condition.UNKNOWN, report(s, "xai").condition(), "no status page and no probe");
+        assertEquals(Condition.UNKNOWN, report(s, "deepseek").condition(), "no status page and no probe");
         assertEquals("stormy", s.severity());
         assertTrue(s.headline().startsWith("Storms over Mistral"), s.headline());
     }
@@ -109,7 +109,7 @@ class ForecasterTest {
         assertTrue(s.bulletin().contains("Severe weather warning"));
         assertTrue(s.bulletin().contains("Mistral: thunderstorms"));
         assertTrue(s.bulletin().contains("High pressure building over Anthropic"));
-        assertTrue(s.bulletin().contains("No observations from Google, xAI and Meta Llama"), s.bulletin());
+        assertTrue(s.bulletin().contains("No observations from Google, xAI, DeepSeek and Meta Llama"), s.bulletin());
         assertEquals("Next 24 hours", s.outlook().get(0).label());
         assertTrue(s.outlook().get(0).text().contains("Console database maintenance"));
         assertTrue(s.outlook().get(1).text().contains("price cuts"));

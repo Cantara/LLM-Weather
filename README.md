@@ -43,9 +43,11 @@ Streamable HTTP. See [docs/mcp.md](docs/mcp.md). Two Agent Skills in `skills/` t
 | Live API probes (one tiny request per provider) | Latency and real reachability | Yes, one per provider, optional |
 | Anthropic API | Rewriting the bulletin as prose | Yes, optional |
 
-Providers are configured in `collector/src/main/resources/providers.json`. Providers without a public
-Statuspage.io site (Google, Meta) report only through probes and show as "no report" without one.
-Verify each `statusPage` URL still serves the Statuspage.io API before relying on it.
+Providers are configured in `collector/src/main/resources/providers.json`. The collector understands
+Atlassian Statuspage (`/api/v2/summary.json`) and Instatus (`/summary.json`) status pages. Providers
+without one in a supported format (Google, Meta, xAI, DeepSeek) report only through probes and show as
+"no report" until a key is configured. If you know a machine-readable status endpoint for one of them,
+add it as `statusPage` and the collector will pick it up.
 
 ## Layout
 
@@ -109,7 +111,9 @@ No data is committed to git; the history lives on Pages.
 
 Setup in the new repository:
 
-1. Settings, Pages, Source: GitHub Actions.
+1. Settings, Pages, Build and deployment, Source: **GitHub Actions**. This step is mandatory: the workflow's
+   token is not allowed to enable Pages itself, so the first runs fail at the deploy step until it is done.
+   Re-run the `Forecast` workflow afterwards (or wait for the next hour).
 2. Optionally add repository secrets `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`,
    `MISTRAL_API_KEY`, `XAI_API_KEY`, `DEEPSEEK_API_KEY`, `COHERE_API_KEY`. Each one switches on the
    probe for that provider. The Anthropic key also switches on the LLM-written bulletin.
