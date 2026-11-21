@@ -1,5 +1,5 @@
 # Build: docker build -t llmweather-mcp .   Run: docker run -p 8080:8080 llmweather-mcp
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM maven:3.10-eclipse-temurin-21 AS build
 WORKDIR /src
 COPY pom.xml .
 RUN mvn -B -q dependency:go-offline
